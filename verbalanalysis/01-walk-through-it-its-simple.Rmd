@@ -1,0 +1,211 @@
+---
+title: "Walk through it it's simple"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+
+add_zero <- function(x){
+  ifelse(nchar(x) == 1, paste0("0", x), x)
+}
+```
+
+# Clean up data
+
+```{r}
+verbal <- read_rds("data/verbal.rds")
+
+verbal_long_full <- 
+    verbal %>% 
+    gather(item, yes, -gender) %>% 
+    mutate(
+        item_full = 
+            item %>% 
+            str_replace("s1", "Bus doesn't stop_") %>%
+            str_replace("s2", "Miss a train_") %>%
+            str_replace("s3", "Grocery store closed_") %>%
+            str_replace("s4", "Operator disconnects me_")
+    ) %>% 
+    separate(item_full, c("situation", "type", "action"), "_") %>% 
+    mutate(label = paste0(situation, ", ", type, ", ", action))
+
+ITEMS <- 
+    verbal_long_full %>% 
+    distinct(item, label) %>% 
+    mutate(item_num = row_number()) %>% 
+    mutate(var = paste0("item", 1:24))
+
+verbal_long <- 
+    verbal_long_full %>% 
+    select(label, situation, type, action, gender, yes)
+
+verbal_summarized <- 
+    verbal_long %>% 
+    group_by(label, gender) %>% 
+    summarize(p = mean(yes), n = n()) %>% 
+    ungroup()
+
+verbal_summarized %>% 
+  mutate(l = log(p / (1 - p))) %>% 
+  filter(label %>% str_detect("Miss a train")) %>% 
+  select(label, gender, l) %>% 
+  spread(gender, l) %>% 
+  select(label, male, female) %>% 
+  mutate(difference = male - female) %>% 
+  arrange(desc(difference))
+
+verbal_summarized %>% write_rds("01-verbal_summarized.rds")
+
+# we didn't get any input from sample size at all! 
+# could do with some simple test of proportions
+# or i think i want to make the case that moving towards Rasch is good....
+```
+
+# Make a master dataframe to work with 
+
+```{r}
+# reference -- 
+# google "definition of logit function"
+# ?boot::logit
+# top left value goes from 0.691 to log(0.691 / (1 - 0.691))
+
+verbal_summarized_p_values <- 
+    verbal_summarized %>% 
+    select(-n) %>% 
+    spread(gender, p) %>% 
+    mutate(male_minus_female = male - female) %>% 
+    arrange(male_minus_female) %>% 
+    mutate(p_rank = row_number() %>% add_zero()) %>% 
+    rename(p_female = female, p_male = male, p_male_minus_female = male_minus_female) %>% 
+    left_join(
+        ITEMS
+    ) %>% 
+    mutate(
+        l_female = boot::logit(p_female), 
+        l_male = boot::logit(p_male),
+        l_male_minus_female = l_male - l_female
+    ) %>% 
+    arrange(l_male_minus_female) %>% 
+    mutate(l_rank = row_number() %>% add_zero()) %>% 
+    mutate(p_label = paste0(p_rank, ". ", label)) %>% 
+    select(item_num, item, label, everything())
+
+verbal_summarized_p_values %>% write_rds("01-verbal_summarized_p_values.rds")
+```
+
+# Make base graphs
+
+```{r}
+theme_set(theme_minimal(base_size = 8))
+
+x <- 
+    verbal_summarized_p_values %>% 
+    select(p_label, male = p_male, female = p_female) %>% 
+    gather(var, val, -p_label) %>% 
+    ggplot(aes(x = val, y = p_label, color = var)) +
+    geom_point(size = 2) +
+    guides(color = FALSE) +
+    scale_x_continuous(labels = scales::percent) +
+    labs(x = "Yes rate")
+
+y <- verbal_summarized_p_values %>% 
+    select(p_label, male = l_male, female = l_female) %>% 
+    mutate(p_label = fct_reorder(p_label, male - female)) %>% 
+    gather(var, val, -p_label) %>% 
+    ggplot(aes(x = val, y = p_label, color = var)) +
+    geom_point(size = 2) +
+    guides(color = FALSE) +
+    labs(x = "Yes logits", y = "")
+
+gridExtra::grid.arrange(x, y, nrow = 1)
+
+cowplot::plot_grid(x, y, nrow = 1, rel_widths = c(0.45, 0.55))
+```
+
+# Now let's do that new thing what the heck
+
+```{r}
+library(mirt)
+R.utils::sourceDirectory("../anchor/R")
+
+data <- verbal %>% select(-gender)
+groups <- ifelse(verbal$gender == "female", "a_ref", "b_foc")
+
+intuitive_mod <- fit_mod_intuitive(data, groups)
+
+verbal_summarized_p_values_with_mod <- 
+    intuitive_mod %>% 
+    coef_1f() %>% 
+    .$items %>% 
+    select(item_num = item, a_ref_easy, b_foc_easy) %>% 
+    left_join(verbal_summarized_p_values)
+```
+
+```{r}
+z <- 
+    verbal_summarized_p_values_with_mod %>% 
+    select(p_label, male = b_foc_easy, female = a_ref_easy) %>% 
+    mutate(p_label = fct_reorder(p_label, male - female)) %>% 
+    gather(var, val, -p_label) %>% 
+    ggplot(aes(x = val, y = p_label, color = var)) +
+    geom_point(size = 2) +
+    labs(x = "Easiness paramter", y = "")
+
+cowplot::plot_grid(x, y, z, nrow = 1, rel_widths = c(0.315, 0.315, 0.37))
+```
+
+# Add the draws
+
+```{r}
+verbal_summarized_p_values %>% 
+  select(item, label, l_rank)
+
+# THIS IS THE GRAPH
+intuitive_mod %>%
+    mod_intuitive_to_draws_df() %>%
+    select(-run) %>%
+    gather(var, val) %>%
+    mutate(item_num = parse_number(var)) %>% 
+    left_join(ITEMS) %>%
+    left_join(verbal_summarized_p_values %>% select(item_num, p_label, l_rank)) %>% 
+    mutate(val = -val) %>%
+    mutate(p_label = fct_reorder(p_label, val)) %>%
+    mutate(LABEL = paste0(l_rank, ". ", label)) %>% 
+    ggplot(aes(x = val, y = LABEL)) +
+    ggridges::geom_density_ridges() +
+    labs(
+        x = latex2exp::TeX("$\\tilde{b_j}^{male} - \\tilde{b_j}^{female}$")
+    )
+
+intuitive_mod %>%
+    coef_1f() %>%
+    .$items %>%
+    mutate(title = paste0(item, " - ", vars)) %>%
+    select(item, title, a_ref_easy, b_foc_easy) %>%
+    mutate(male_more = b_foc_easy - a_ref_easy) %>%
+    mutate(title = fct_reorder(title, male_more)) %>%
+    ggplot(aes(x = male_more, y = title)) +
+    geom_point()
+```
+
+```{r}
+mod <- intuitive_mod
+par_draws <- MASS::mvrnorm(n = 10000, mu = extract.mirt(mod, "parvec"), Sigma = extract.mirt(mod, "vcov"))
+par_draws <- par_draws[ , str_detect(colnames(par_draws), "d")]
+
+par_draws %>%
+    as_tibble() %>%
+    set_names(c(paste0(ITEMS$var, "_female"), paste0(ITEMS$var, "_male"))) %>%
+    mutate(run = row_number()) %>%
+    gather(var, val, -run) %>%
+    separate(var, c("item", "sex"), "_") %>%
+    left_join(verbal_summarized_p_values %>% select(item = var, p_label)) %>% 
+    spread(sex, val) %>% 
+    mutate(p_label = fct_reorder(p_label, male - female)) %>% 
+    gather(sex, val, -run, -item, -p_label) %>% 
+    ggplot(aes(x = val, y = p_label, fill = sex)) +
+    ggridges::geom_density_ridges(alpha = 0.5)
+```
+

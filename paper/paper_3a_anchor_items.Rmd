@@ -1,0 +1,158 @@
+### All-others-as-anchors (AOAA)
+
+The all-others-as-anchors (AOAA) method tests each item for DIF one at a time using all of the other items as anchors. For example, when testing the first item for DIF, all of the other items are used as anchors. This is done using a LRT that compares the baseline model, where all item parameters are fixed across groups, to the flexible model, where the parameters of the tested item are freed across groups [@thissen1993detection]. Then, when testing the second item for DIF, once again all of the other items (including the first item) are used as anchors, and so on. The items for which the flexible model outperforms the baseline model are identified as having DIF, and the rest of the items become anchor items. AOAA is implemented in the mirt R package, and is called by passing scheme = "drop" to the DIF function (drop refers to dropping a single constraint when moving from the baseline to the flexible model).
+
+While some [e.g., @meade2012solving] have advocated for the use of AOAA, we note a shortcoming in its key assumption that all items not being tested do not exhibit DIF, which is, of course, counter to the underlying rationale for the undertaking. On a practical level, it is thought that AOAA will perform well if a small minority of items have DIF or the DIF is balanced such that some items are biased against the focal group, while others are biased against the reference group. A simple thought experiment illustrates how AOAA fails: Imagine a three item test where the first item has DIF, and the other two do not. With a sufficiently large number of students, AOAA will find that all items test positive for DIF. The last two items will incorrectly test positive as a result of "artificial DIF": Including the first item in the anchor set causes the group ability difference to be misestimated which creates the appearance of DIF in the other two items [@andrich2012real].
+
+Figure \ref{fig:aoaa} shows the results of AOAA applied to the verbal aggression data. On the left is the GLIMMER with the curves colored red if AOAA finds the item to contain DIF. In total, AOAA found eight items to contain DIF: Five at the top with more frequent affirmative responses from males and three at the bottom with more frequent affirmative responses from females.^[This is an expected result using AOAA: with a variety of performance differences it tends to find some items with DIF in one direction and other items with DIF in the other direction]. On the right is the final model which is identified by specifying that items without DIF (anchor items) have a difference in item easiness parameters of zero. The final model found $\hat \mu^\text{male} \approx 0.197$, meaning that males have greater verbal aggression than females on average.^[It can be seen that the final model will estimate $\mu^\text{male}$ to be positive by noticing that the mean $\tilde {d_j}$ for anchor items (on the left in the GLIMMER) is positive.]
+
+```{r aoaa, fig.height = 4, fig.cap = 'AOAA results depicted in a GLIMMER'}
+anchor_items <- read_rds(here("verbalanalysis/03-anchor-items.rds"))
+item_map <- read_rds(here("verbalanalysis/02-itemmap.rds"))
+
+bind_rows(
+    anchor_items$intuitive_mod[[1]] %>%
+        mod_intuitive_to_draws_df() %>%
+        select(-run) %>%
+        gather(var, val) %>%
+        mutate(item = parse_number(var)) %>%
+        left_join(anchor_items$AOAA_status[[1]]) %>%
+        mutate(val = -val) %>%
+        mutate(what = "GLIMMER") %>%
+        mutate(
+            status = case_when(status == "anchor" ~ "Final Anchor Item", status == "flex" ~ "Final DIF Item")
+        ),
+    anchor_items$AOAA_mod[[1]] %>%
+        mod_to_draws_df(n = 1000) %>%
+        select(-run) %>%
+        gather(var, val) %>%
+        mutate(item = parse_number(var)) %>%
+        filter(val != 0) %>%
+        mutate(val = -val) %>%
+        mutate(status = "Final DIF Item") %>%
+        mutate(what = "Final Model")
+) %>%
+    left_join(read_rds(here("verbalanalysis/02labels.rds")) %>% rename(item = item_num)) %>%
+    mutate(what = factor(what, levels = c("GLIMMER", "Final Model"))) %>% 
+    ggplot(aes(x = val, y = full)) +
+    ggridges::geom_density_ridges(aes(fill = status)) +
+    labs(
+        y = "",
+        x = latex2exp::TeX("$\\tilde{d_j} = \\tilde{b_j}^{male} - \\tilde{b_j}^{female} \\;\\;\\;\\;\\; \\hat{d_j} = \\hat{b_j}^{male} - \\hat{b_j}^{female}$")
+    ) +
+    facet_wrap(~ what) +
+    geom_point(
+        data =
+            anchor_items$AOAA_final_dif[[1]] %>%
+            mutate(difference_in_easy = difference_in_easy - difference_in_easy[anchor][1]) %>%
+            mutate(item = parse_number(item)) %>%
+            left_join(read_rds(here("verbalanalysis/02labels.rds")) %>% rename(item = item_num)) %>%
+            filter(a_ref_easy == b_foc_easy) %>%
+            mutate(status = "Final Anchor Item") %>%
+            mutate(what = "Final Model") %>% 
+            mutate(what = factor(what, levels = c("GLIMMER", "Final Model"))),
+        aes(x = difference_in_easy, y = full, color = status)
+    ) +
+    guides(color = FALSE) +
+    scale_fill_manual(values =
+                          c("Final Anchor Item" = "#34bb99ff",
+                            "Final DIF Item" = "red")) +
+    scale_color_manual(values =
+                          c("Final Anchor Item" = "#34bb99ff",
+                            "Final DIF Item" = "red")) +
+    labs(fill = "") +
+    geom_vline(xintercept = 0, linetype = "dotted") +
+    theme(legend.position="bottom")
+```
+
+### All-others-as-anchors-all-significant (AOAA-AS)
+
+One way to attempt to counter artificial DIF is with purification through iterative anchor selection. For example, @drasgow1987study started with AOAA, removed items displaying DIF from the anchor set, then repeated the process iteratively—with items that have been removed from the anchor set allowed to have free parameters across groups in both the baseline and flexible model—until no more items tested positively. @kopf2015framework named this technique Iterative-backward-AOAA with "backward" (as in reverse) referring to beginning with the assumption that all items are DIF-free. We instead refer to this method as all-others-as-anchors-all-significiant (AOAA-AS). We append "all-significant" to indicate that all items that test positive for DIF are removed from the anchor set in each iteration. AOAA-AS is implemented in the mirt R package, and is called by passing scheme = "drop_sequential" to the DIF function.
+
+We argue that AOAA-AS, while a potential improvement, doesn't solve the problem of AOAA. The first iteration of AOAA-AS is AOAA. As a result, artificial DIF can still cause items without DIF to test positively for DIF. In the extreme case, what does the analyst do when all items test positively for DIF in the first iteration? @kopf2015framework encountered precisely this problem in their simulation study and chose to select a single anchor item randomly.^[@woods2009empirical suggested a more straightforward, one-step method: Use AOAA and select the four items that exhibit the least amount of DIF as anchor items. This method will work in some cases but has the serious limitation of always using exactly four anchor items.] For the verbal aggression data, no additional items tested positive for DIF after the first iteration. Accordingly, the results for AOAA and AOAA-AS are the same as presented in Figure \ref{fig:aoaa}.
+
+### All-others-as-anchors-One-at-a-time (AOAA-OAT)
+
+We propose an extension of these methods, all-others-as-anchors-one-at-a-time (AOAA-OAT), which, to our knowledge (and surprise), has not previously been explicitly proposed. AOAA-OAT is inspired by @hagquist2017recent, who assert that "items showing DIF initially should not be resolved simultaneously but sequentially" [p. 6]. Like AOAA-AS, AOAA-OAT starts with AOAA, but only the single item exhibiting the most DIF—based on the $\chi^2$ test statistic from each LRT—is removed from the anchor set. The process continues iteratively until no new items display DIF. AOAA-OAT and AOAA-AS are similar in that they are both iterative; the difference is that AOAA-OAT takes the more conservative approach of removing only *one* item in each iteration as opposed to *all* items that test positive for DIF. As a result, we believe that AOAA-OAT is less likely to be "fooled" by artifical DIF. AOAA-OAT is not currently implemented in the mirt R package.
+
+Figure \ref{fig:aoaaoat} shows the results of AOAA-OAT applied to the verbal aggression data. On the left is the GLIMMER with the curves colored a shade of red or purple according to the order in which they were removed from the anchor set. In total, AOAA-OAT found nine items to contain DIF: The first item removed from the anchor set had more affirmative responses from females than males. The additional eight items removed from the anchor set all had more affirmative responses from males than females. On the right is the final model which is identified by specifying that items without DIF (anchor items) have a difference in item easiness parameter of zero. The final model finds $\hat \mu^\text{male} \approx 0.001$, meaning that males and females have nearly the same verbal aggression on average.^[It can be seen that the final model will estimate $\mu^\text{male}$ to be near zero by noticing that the mean $\tilde {d_j}$ for anchor items (on the left in the GLIMMER) is about zero.] This might seem an odd conclusion: Males score higher on the majority of verbal aggression items, but AOAA-OAT has disregarded many of those items on account of them having DIF. We discuss this issue further when we compare the AGI methods.
+
+```{r aoaaoat, fig.height = 5, fig.cap = 'AOAA-OAT results for the verbal aggression data. On the left, the GLIMMER is identified by setting the group means equal. Green represents items that AOAA-OAT did not find to contain DIF (i.e., anchor items). On the right, the final AOAA model is identified by fixing the anchor items equivalent across groups. Distributions are shown to give a sense of variability and are estimated via 10,000 imputations from the item parameter covariance matrix.'}
+bind_rows(
+    anchor_items$intuitive_mod[[1]] %>%
+        mod_intuitive_to_draws_df() %>%
+        select(-run) %>%
+        gather(var, val) %>%
+        mutate(item = parse_number(var)) %>%
+        left_join(anchor_items$AOAA_OAT_status[[1]]) %>%
+        mutate(val = -val) %>%
+        mutate(
+            order = as.character(order),
+            order = ifelse(is.na(order), "Final Anchor Item", order),
+            order = case_when(
+                order == "1" ~ "1st",
+                order == "2" ~ "2nd",
+                order == "3" ~ "3rd",
+                order == "4" ~ "4th",
+                order == "5" ~ "5th",
+                order == "6" ~ "6th",
+                order == "7" ~ "7th",
+                order == "8" ~ "8th",
+                order == "9" ~ "9th",
+                TRUE ~ order
+            ),
+            what = "GLIMMER"
+        ) %>% 
+        mutate(what = factor(what, levels = c("GLIMMER", "Final Model"))),
+
+    anchor_items$AOAA_OAT_mod[[1]] %>%
+        mod_to_draws_df(n = 1000) %>%
+        select(-run) %>%
+        gather(var, val) %>%
+        mutate(item = parse_number(var)) %>%
+        filter(val != 0) %>%
+        mutate(val = -val) %>%
+        mutate(order = "Final DIF Item") %>%
+        mutate(what = "Final Model") %>% 
+        mutate(what = factor(what, levels = c("GLIMMER", "Final Model")))
+) %>%
+    left_join(read_rds(here("verbalanalysis/02labels.rds")) %>% rename(item = item_num)) %>%
+    ggplot(aes(x = val, y = full)) +
+    ggridges::geom_density_ridges(aes(fill = order)) +
+    labs(
+        y = "",
+        x = latex2exp::TeX("$\\tilde{d_j} = \\tilde{b_j}^{male} - \\tilde{b_j}^{female} \\;\\;\\;\\;\\;\\; \\hat{d_j} = \\hat{b_j}^{male} - \\hat{b_j}^{female}$")
+    ) +
+    facet_wrap(~ what) +
+    scale_fill_manual(values =
+                          c("1st" = "#a32e2eff",
+                            "2nd" = "#cf2a2aff",
+                            "3rd" = "#d31c1cff",
+                            "4th" = "#bb347cff",
+                            "5th" = "#bb34a1ff",
+                            "6th" = "#a834bbff",
+                            "7th" = "#8434bbff",
+                            "8th" = "#7634bbff",
+                            "9th" = "#6934bbff",
+                            "Final Anchor Item" = "#34bb99ff",
+                            "Final DIF Item" = "red"), 
+                      breaks = c("1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th")) +
+    geom_point(
+        data =
+            anchor_items$AOAA_OAT_final_dif[[1]] %>%
+            mutate(difference_in_easy = difference_in_easy - difference_in_easy[anchor][1]) %>%
+            mutate(item = parse_number(item)) %>%
+            left_join(read_rds(here("verbalanalysis/02labels.rds")) %>% rename(item = item_num)) %>%
+            filter(a_ref_easy == b_foc_easy) %>%
+            mutate(order = "Final Anchor Item") %>%
+            mutate(what = "Final Model") %>% 
+            mutate(what = factor(what, levels = c("GLIMMER", "Final Model"))),
+        aes(x = difference_in_easy, y = full, color = order)
+    ) +
+    scale_color_manual(values = c("Final Anchor Item" = "#34bb99ff")) +
+    guides(color = FALSE) +
+    guides(fill=guide_legend(nrow=2,byrow=TRUE)) +
+    labs(fill = "Removed from\nAnchor Set") +
+    geom_vline(xintercept = 0, linetype = "dotted") +
+    theme(legend.position="bottom", legend.key.size = unit(0.5,"line"))
+```

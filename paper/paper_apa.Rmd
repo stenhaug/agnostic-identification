@@ -1,0 +1,123 @@
+---
+title             : "Treading Carefully: Agnostic Identification as the Tenuous First Step of Detecting Differential Item Functioning"
+shorttitle        : "Agnostic Identification"
+
+author: 
+  - name          : "Benjamin A. Stenhaug"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "450 Serra Mall, Stanford, CA 94305"
+    email         : "stenhaug@stanford.edu"
+  - name          : "Michael C. Frank"
+    affiliation   : "2"
+  - name          : "Benjamin W. Domingue"
+    affiliation   : "1"
+
+affiliation:
+  - id            : "1"
+    institution   : "The Graduate School of Education, Stanford University"
+  - id            : "2"
+    institution   : "Department of Psychology, Stanford University"
+
+authornote: | 
+  The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305B140009 to the Board of Trustees of the Leland Stanford Junior University. The opinions expressed are those of the author and do not represent views of the Institute or the U.S. Department of Education.
+
+abstract: |
+  The last thirty years have brought significant methodological advance in detecting differential item functioning (DIF). Still, typical methods—such as matching on sum scores or identifying anchor items—are based exclusively on internal criterion and therefore rely on a crucial piece of circular logic: items with DIF are identified via an assumption that other items do not have DIF. This logic is an attempt to solve an easy-to-overlook identification problem at the beginning of most DIF detection. We explore this problem, which we describe as the Fundamental DIF Identification Problem, in depth here. We suggest three steps for determining whether it is surmountable and DIF detection results can be trusted. (1) Examine raw item response data for potential DIF. To this end, we introduce a new graphical method for visualizing potential DIF in raw item response data. (2) Compare the results of a variety of methods. These methods, which we describe in detail, include commonly-used anchor item methods, recently-proposed anchor point methods, and our suggested adaptations. (3) Interpret results in light of the possibility of DIF methods failing. We illustrate the basic challenge and the methodological options using the classic verbal aggression data for which we find that DIF methods should not be trusted. We conduct a simulation study to illustrate how DIF methods can fail.
+  
+keywords          : "Item Response Theory; DIF; Anchor Items; Anchor Points; Bias"
+
+bibliography      : ["paper.bib"]
+
+header-includes: 
+- \PassOptionsToPackage{table}{xcolor} # - \usepackage[table]{xcolor} # - \setlength{\@fptop}{0pt} - \@fpsep\textheight - \usepackage{booktabs}
+- \usepackage{colortbl}
+- \usepackage{mathptmx} # this makes as close to times new roman font, need to edit tex to get 12pt
+- \usepackage{amsmath} #  - \makeatletter - \makeatother
+- \usepackage{bm}
+- \interfootnotelinepenalty=10000
+- \DeclareMathOperator*{\argmax}{arg\,max} # for gini coefficient
+- \DeclareMathOperator*{\argmin}{arg\,min} # for gini coefficient
+- \usepackage{float}
+- \usepackage{setspace}\doublespacing
+
+floatsintext      : yes
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            :
+  papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+# latex_engine: xelatex
+knitr::opts_chunk$set(
+    fig.align='center',
+    echo=FALSE,
+    warning=FALSE,
+    message=FALSE,
+    fig.pos='h'
+    # fig.retina = 5
+)
+
+library(tidyverse)
+library(ggtext)
+library(here)
+library(mirt)
+library(cluster)
+library(DescTools)
+library(knitr)
+library(kableExtra)
+set.seed(12345)
+R.utils::sourceDirectory(here("R"))
+theme_set(theme_bw())
+```
+
+# Introduction {#intro}
+
+```{r child = "paper_1_intro.Rmd"}
+```
+
+# Descriptive Analysis {#descriptive}
+
+```{r child = "paper_2_descriptive.Rmd"}
+```
+
+# Agnostic Identification Methods {#aimethods}
+
+```{r child = "paper_3_ai_methods.Rmd"}
+```
+
+# Simulation Study
+
+```{r child = "paper_4_simulation_study.Rmd"}
+```
+
+# Discussion
+
+```{r child = "paper_5_discussion.Rmd"}
+```
+
+\clearpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup
+
+\clearpage
+
+# Appendix
+
+```{r child = "paper-appendix.Rmd"}
+```

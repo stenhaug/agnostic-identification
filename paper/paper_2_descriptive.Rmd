@@ -1,0 +1,106 @@
+Before we discuss AGI methods, we offer a simple but powerful process for examining the Fundamental DIF Identification Problem in a given data set. This approach is motivated by our observation that AGI methods typically work as a black box: The analyst puts their item response data in and the black box outputs an identification assumption to be used when fitting subsequent models. This opacity is unnecessary when potential DIF in its most basic conceptualization is straightforward: For the Rasch model, an item might contain DIF if it has "a group performance difference relatively larger than the group differences for other items" [@camilli2013ongoing, p. 108]. Accordingly, our goal is to develop a process that allows the analyst to compare group performance differences across items, thereby developing intuition for potential DIF in their data.
+
+## Proportions
+
+The obvious starting point for descriptively understanding potential DIF is to calculate the proportion of affirmative responses by group for each item. For the verbal aggression data, Table \ref{tab:pvalues} shows the proportion of "yes" responses by gender for the "miss a train" situation. The first row shows that more males (81%) than females (61%) do curse when they miss a train. This 20% difference does not necessarily constitute DIF—it could simply be that males, on average, have more verbal aggression than females. Item-level differences that result in this way from group differences in the underlying latent trait are described as "item impact" [@zumbo2007three]. To consider potential DIF, we need to make comparisons across rows. For example, the fourth row shows that a greater percent of females (80%) than males (75%) want to curse when they miss a train. Historically, proportions were used to detect DIF before research found that they are not a good metric which with to make these across-item comparisons [@camilli1994methods].^[As an arbitrary example, it's not clear how an analyst should think about a 5% difference between 50% and 55% as compared to 95% to 100%.]
+
+```{r pvalues}
+verbal_summarized <- read_rds(here("verbalanalysis/01-verbal_summarized.rds"))
+
+verbal_summarized %>% 
+    separate(label, c("Situation", "Type", "Action"), ",") %>% 
+    mutate(
+        Type = 
+            case_when(
+                Type == " do" ~ "Do",
+                Type == " want" ~ "Want"
+            ),
+        Action = 
+            case_when(
+                Action == " curse" ~ "Curse",
+                Action == " scold" ~ "Scold",
+                Action == " shout" ~ "Shout",
+            )
+    ) %>% 
+    select(-n) %>% 
+    spread(gender, p) %>% 
+    filter(Situation == "Miss a train") %>% 
+    rename(Male = male, Female = female) %>% 
+    select(Situation, Type, Action, Male, Female) %>% 
+    mutate_if(is.numeric, round, 2) %>% 
+	knitr::kable("latex", booktabs = T, 
+	             caption = "Proportion of affirmative responses by gender in the verbal aggression data. Some of the items have a greater proportion of affirmative responses by males, and others have a great proportion by females. Proportions are an intuitive but imperfect way of making across-item group difference comparisons.") %>%
+    kableExtra::kable_styling(
+        latex_options = c("striped", "HOLD_position"), 
+        font_size = 10
+    )
+```
+
+## Logits
+
+To make quantities more comparable across items, we convert from probabilities to logits where $\text{logit}(p) = \log\left(\dfrac{p}{1 - p}\right)$ as shown in Table \ref{tab:logits}. With logits as units, the difference across groups is both comparable and interpretable.^[Conveniently, logits are the units of IRT models.] Table \ref{tab:logits} thus makes it easier to analyze the challenges associated with DIF. For example, males are one logit more likely than females to curse or scold if they miss a train. How should the analyst think about this difference? There are a few possibilities: It could be the case this large difference compared to the other items represents DIF. It could also be the case that the difference on these items actually reflects the true difference in verbal aggression across genders and its the other four items that contain DIF in the other direction. Of course, there are explanations that no not implicate DIF at all: Maybe the differences are not statistically significant and are the result of random variation—after all, the sample sizes of 243 females and 73 males aren't reflected in Table \ref{tab:logits}. Alternatively, differences could also be driven by patterns of non-random missing responses.
+
+```{r logits}
+verbal_summarized %>% 
+    separate(label, c("Situation", "Type", "Action"), ",") %>% 
+    mutate(
+        Type = 
+            case_when(
+                Type == " do" ~ "Do",
+                Type == " want" ~ "Want"
+            ),
+        Action = 
+            case_when(
+                Action == " curse" ~ "Curse",
+                Action == " scold" ~ "Scold",
+                Action == " shout" ~ "Shout",
+            )
+    ) %>% 
+    select(-n) %>% 
+    spread(gender, p) %>% 
+    filter(Situation == "Miss a train") %>% 
+    rename(Male = male, Female = female) %>% 
+    select(Situation, Type, Action, Male, Female) %>% 
+    mutate(
+        Male = log(Male / (1 - Male)),
+        Female = log(Female / (1 - Female)),
+        `Logit Difference` = Male - Female
+    ) %>% 
+    mutate_if(is.numeric, round, 2) %>% 
+	knitr::kable("latex", booktabs = T, 
+	             caption = "Logits of affirmative responses by gender for the train situation for the verbal aggression data. Logit differences are an improvement over proportions for making across-item group difference comparisons, but they are still imperfect because there is no item response model underlying the estimation. ") %>%
+    kableExtra::kable_styling(
+        latex_options = c("striped", "HOLD_position"), 
+        font_size = 10
+    )
+```
+
+## Graph of Logits Imputed Multiply with Means Equal (GLIMMER)
+
+We now extend the logic of Table \ref{tab:logits} to the multigroup Rasch model—which can take into account non-random patterns of missingness, sampling variability, and can be interpreted within the IRT framework—via a “graph of logits imputed multiply with means equal” (GLIMMER). A GLIMMER is a visualization that focuses on between-item variation in group difference in performances. As a result, the analyst can reason about potential DIF in their raw item response data without making any (potentially incorrect) assumptions. In essence, a GLIMMER is a way to see the Fundamental DIF Identification Problem for a data set.^[GLIMMER is inspired in part by @pohl2017cluster who fit a model with both the reference and focal group means set to 0 in a pedagogical example, and @talbot2013taking who fixed both pre-test and post-test means to 0 in order to estimate item-specific learning gains.]
+
+GLIMMER begins by fitting a multigroup Rasch model to the data. This model is estimated using marginal maximum likelihood estimation (MMLE) [@bock1981marginal], which has the advantage of integrating over missing responses. We identify this model by arbitrarily setting $\mu^\text{male} = 0$ [@chalmers2012mirt]. Given that we also assume $\mu^\text{female} = 0$, the assumption is that the groups have equal mean ability; we emphasize that this is merely a stopgap used to characterize the nature of the Fundamental DIF Identification Problem (i.e., we are not suggesting that the groups actually have equal means). With this assumption, a GLIMMER has the clarifying effect of pushing all differences in performance—either from group ability differences or DIF—into the item easiness parameters.
+
+The model estimates a separate item easiness parameter for each group, $\tilde {b_j}^\text{female}$ and $\tilde {b_j}^\text{male}$. We use the tilde (e.g., $\tilde {b_j}$) to keep track of parameter estimates from a model arbitrarily identified by setting both group means to zero. Accordingly, both $\tilde{b_j}^\text{female}$ and $\tilde{b_j}^\text{male}$ are the item easiness parameters assuming that the group mean latent trait is $0$. We then calculate $\tilde{d_j} = \tilde {b_j}^\text{male} - \tilde {b_j}^\text{female}$ which captures the item’s total group difference in performance. To make the interpretation of $\tilde{d_j}$ clear, consider the following examples. If the data generating model is that group mean latent abilities are the same and no items have DIF, then $\tilde{d_j} = 0$ for every item. If males have a greater mean latent ability and no items have DIF, then $\tilde{d_j}$ will be the same for all items (but greater than zero). If males have a greater mean latent ability and a single item has DIF such that males show even greater verbal aggression, then $\tilde{d_j}$ will be approximately the same for all non-DIF items and $\tilde{d_j}$ will be comparably larger for the single item with DIF.
+
+To measure the variation in each $\tilde{{d_j}}$, the item parameter covariance matrix is estimated using Oakes' identity [@chalmers2018numerical]. Then, multiple imputations (MI) [@yang2012characterizing] are drawn to estimate the distribution of $\tilde{d_j}$ for each item. These are the distributions displayed in a GLIMMER. The GLIMMER for the verbal aggression data is shown in Figure \ref{fig:emmilg}. We emphasize that the GLIMMER contains all possible information about the differences in group performance for each item. The key takeaway from Figure \ref{fig:emmilg} is that there is not a cluster of items that have a similar difference. Rather, there is a continuum of differences ranging from small for females to large for males. This is concerning. AGI requires specifying the performance difference that results from group differences in the latent trait. Therefore, the lack of a cluster of items with a similar performance difference indicates to the analyst that the Fundamental DIF Identification Problem is particularly fraught for this data set. Given the value of this type of understanding to the analyst, we suggest inspecting a GLIMMER as the first step of DIF detection. We now move on to our second suggested step which is to compare results from a variety of AGI methods, which implement an algorithm to address the Fundamental DIF Identification Problem.
+
+```{r emmilg, fig.height = 4, fig.cap = 'GLIMMER for the verbal aggression data. The total performance difference (from either ability differences or DIF), $\\tilde{{d_j}}$, for each item is shown. Distributions—as opposed to point estimates—are shown to help the analyst reason about uncertainty. Distributions are calculated by drawing 10,000 imputations from the item parameter covariance matrix. There is no consistent performance difference across items, indicating that the Fundamental DIF Identification Problem is difficult for this data.', fig.pos='H'}
+anchor_items <- read_rds(here("verbalanalysis/03-anchor-items.rds"))
+item_map <- read_rds(here("verbalanalysis/02-itemmap.rds"))
+
+# just the plain EM MILG
+anchor_items$intuitive_mod[[1]] %>%
+    mod_intuitive_to_draws_df() %>%
+    select(-run) %>%
+    gather(var, val) %>%
+    mutate(item_num = parse_number(var)) %>%
+    left_join(read_rds(here("verbalanalysis/02labels.rds"))) %>%
+    mutate(val = -val) %>%
+    ggplot(aes(x = val, y = full)) +
+    ggridges::geom_density_ridges() +
+    labs(
+        x = latex2exp::TeX("$\\tilde{d_j} = \\tilde{b_j}^{male} - \\tilde{b_j}^{female}$"),
+        y = ""
+    )
+```
