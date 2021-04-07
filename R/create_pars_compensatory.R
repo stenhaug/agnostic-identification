@@ -3,7 +3,7 @@ create_pars_compensatory_1_biased_item <- function(){
         item = 1:8,
         easy = rnorm(8, 0, 1),
         target_disc = 1,
-        nuisance_disc = c(rep(0, 7), rep(0.5, 1))
+        nuisance_disc = c(rep(0, 7), rep(0.5, 1))#
     )
 }
 

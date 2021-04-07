@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  30 MAR 2021 16:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  7 APR 2021 11:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -606,26 +606,26 @@ File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
 ) (./paper_apa.aux)
 \openout1 = `paper_apa.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 185.
-LaTeX Font Info:    ... okay on input line 185.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 185.
-LaTeX Font Info:    ... okay on input line 185.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 185.
-LaTeX Font Info:    ... okay on input line 185.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 185.
-LaTeX Font Info:    ... okay on input line 185.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 185.
-LaTeX Font Info:    ... okay on input line 185.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 185.
-LaTeX Font Info:    ... okay on input line 185.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 185.
-LaTeX Font Info:    ... okay on input line 185.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 185.
-LaTeX Font Info:    ... okay on input line 185.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 185.
-LaTeX Font Info:    ... okay on input line 185.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
 LaTeX Font Info:    Trying to load font information for T1+ptm on input line 18
-5.
+6.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
@@ -694,14 +694,14 @@ Package caption Info: longtable package is loaded.
 Package: ltcaption 2018/08/26 v1.4a longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \microtypecontext on input line 185.
+LaTeX Info: Redefining \microtypecontext on input line 186.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `basictext'.
-LaTeX Info: Redefining \showhyphens on input line 185.
+LaTeX Info: Redefining \showhyphens on input line 186.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -709,7 +709,7 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
 \AtBeginShipoutBox=\box60
-Package hyperref Info: Link coloring OFF on input line 185.
+Package hyperref Info: Link coloring OFF on input line 186.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 (/usr/local/texlive/2020/texmf-dist/tex/latex/refcount/refcount.sty
@@ -721,36 +721,36 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count315
 )
-LaTeX Info: Redefining \ref on input line 185.
-LaTeX Info: Redefining \pageref on input line 185.
-LaTeX Info: Redefining \nameref on input line 185.
+LaTeX Info: Redefining \ref on input line 186.
+LaTeX Info: Redefining \pageref on input line 186.
+LaTeX Info: Redefining \nameref on input line 186.
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 1
-87.
+88.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line
- 187.
+ 188.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line
- 187.
+ 188.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/psnfss/omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line
- 187.
+ 188.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/psnfss/omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line
- 187.
+ 188.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/psnfss/omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-87.
+88.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/mt-cmr.cfg
@@ -758,12 +758,12 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 (RS)
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-87.
+88.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-187.
+188.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/microtype/mt-msa.cfg
@@ -774,25 +774,25 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 File: mt-eur.cfg 2006/07/31 v1.1 microtype config. file: AMS Euler Roman (RS)
 )
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
-87.
+88.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 187.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 188.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 187.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 188.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 187.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 188.
 [1{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ] [2] [3]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 204.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 205.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 204.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 205.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 204.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 205.
 
 Underfull \vbox (badness 5345) has occurred while \output is active []
 
@@ -800,131 +800,143 @@ Underfull \vbox (badness 5345) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [6]
+Underfull \vbox (badness 2762) has occurred while \output is active []
+
+[7] [8] [9] [10]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[7] [8] [9] [10] [11]
-Underfull \vbox (badness 4752) has occurred while \output is active []
-
-[12]
-<paper_apa_files/figure-latex/emmilg-1.pdf, id=116, 446.66875pt x 277.035pt>
+[11] [12]
+<paper_apa_files/figure-latex/emmilg-1.pdf, id=117, 446.66875pt x 277.035pt>
 File: paper_apa_files/figure-latex/emmilg-1.pdf Graphic file (type pdf)
 <use paper_apa_files/figure-latex/emmilg-1.pdf>
 Package pdftex.def Info: paper_apa_files/figure-latex/emmilg-1.pdf  used on inp
-ut line 316.
+ut line 331.
 (pdftex.def)             Requested size: 446.66765pt x 277.03432pt.
 
-Underfull \vbox (badness 4060) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[13 <./paper_apa_files/figure-latex/emmilg-1.pdf>] [14]
-<paper_apa_files/figure-latex/aoaa-1.pdf, id=145, 446.66875pt x 273.02pt>
+[13] [14 <./paper_apa_files/figure-latex/emmilg-1.pdf>] [15]
+<paper_apa_files/figure-latex/aoaa-1.pdf, id=152, 446.66875pt x 273.02pt>
 File: paper_apa_files/figure-latex/aoaa-1.pdf Graphic file (type pdf)
 <use paper_apa_files/figure-latex/aoaa-1.pdf>
 Package pdftex.def Info: paper_apa_files/figure-latex/aoaa-1.pdf  used on input
- line 342.
+ line 357.
 (pdftex.def)             Requested size: 446.67445pt x 273.0235pt.
+[16 <./paper_apa_files/figure-latex/aoaa-1.pdf>]
+Underfull \vbox (badness 2744) has occurred while \output is active []
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[15] [16 <./paper_apa_files/figure-latex/aoaa-1.pdf>]
-<paper_apa_files/figure-latex/aoaaoat-1.pdf, id=175, 446.66875pt x 348.30125pt>
+[17]
+<paper_apa_files/figure-latex/aoaaoat-1.pdf, id=181, 446.66875pt x 348.30125pt>
 
 File: paper_apa_files/figure-latex/aoaaoat-1.pdf Graphic file (type pdf)
 <use paper_apa_files/figure-latex/aoaaoat-1.pdf>
 Package pdftex.def Info: paper_apa_files/figure-latex/aoaaoat-1.pdf  used on in
-put line 365.
+put line 380.
 (pdftex.def)             Requested size: 446.67445pt x 348.30571pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[17]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[18 <./paper_apa_files/figure-latex/aoaaoat-1.pdf>]
-<paper_apa_files/figure-latex/thegini-1.pdf, id=200, 459.7175pt x 168.63pt>
+[18] [19 <./paper_apa_files/figure-latex/aoaaoat-1.pdf>]
+<paper_apa_files/figure-latex/thegini-1.pdf, id=207, 459.7175pt x 168.63pt>
 File: paper_apa_files/figure-latex/thegini-1.pdf Graphic file (type pdf)
 <use paper_apa_files/figure-latex/thegini-1.pdf>
 Package pdftex.def Info: paper_apa_files/figure-latex/thegini-1.pdf  used on in
-put line 390.
+put line 405.
 (pdftex.def)             Requested size: 459.72337pt x 168.63214pt.
-
-Underfull \vbox (badness 2150) has occurred while \output is active []
-
-[19 <./paper_apa_files/figure-latex/thegini-1.pdf>]
+[20 <./paper_apa_files/figure-latex/thegini-1.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[20] [21]
-<paper_apa_files/figure-latex/minbc-1.pdf, id=235, 459.7175pt x 168.63pt>
+[21]
+<paper_apa_files/figure-latex/minbc-1.pdf, id=236, 459.7175pt x 168.63pt>
 File: paper_apa_files/figure-latex/minbc-1.pdf Graphic file (type pdf)
 <use paper_apa_files/figure-latex/minbc-1.pdf>
 Package pdftex.def Info: paper_apa_files/figure-latex/minbc-1.pdf  used on inpu
-t line 426.
+t line 441.
 (pdftex.def)             Requested size: 459.72337pt x 168.63214pt.
-[22 <./paper_apa_files/figure-latex/minbc-1.pdf>]
-<paper_apa_files/figure-latex/summary-1.pdf, id=255, 448.67625pt x 276.03125pt>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[22]
+<paper_apa_files/figure-latex/summary-1.pdf, id=248, 448.67625pt x 276.03125pt>
 
 File: paper_apa_files/figure-latex/summary-1.pdf Graphic file (type pdf)
 <use paper_apa_files/figure-latex/summary-1.pdf>
 Package pdftex.def Info: paper_apa_files/figure-latex/summary-1.pdf  used on in
-put line 442.
+put line 457.
 (pdftex.def)             Requested size: 448.68884pt x 276.03899pt.
-[23 <./paper_apa_files/figure-latex/summary-1.pdf>] [24]
-Underfull \vbox (badness 1067) has occurred while \output is active []
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[23 <./paper_apa_files/figure-latex/minbc-1.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[24 <./paper_apa_files/figure-latex/summary-1.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [25]
 <paper_apa_files/figure-latex/difmap-1.pdf, id=288, 453.695pt x 313.17pt>
 File: paper_apa_files/figure-latex/difmap-1.pdf Graphic file (type pdf)
 <use paper_apa_files/figure-latex/difmap-1.pdf>
 Package pdftex.def Info: paper_apa_files/figure-latex/difmap-1.pdf  used on inp
-ut line 481.
+ut line 496.
 (pdftex.def)             Requested size: 453.70773pt x 313.17877pt.
-[26 <./paper_apa_files/figure-latex/difmap-1.pdf>]
-<paper_apa_files/figure-latex/simemmlg-1.pdf, id=305, 445.665pt x 277.035pt>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[26] [27 <./paper_apa_files/figure-latex/difmap-1.pdf>]
+<paper_apa_files/figure-latex/simemmlg-1.pdf, id=314, 445.665pt x 277.035pt>
 File: paper_apa_files/figure-latex/simemmlg-1.pdf Graphic file (type pdf)
 <use paper_apa_files/figure-latex/simemmlg-1.pdf>
 Package pdftex.def Info: paper_apa_files/figure-latex/simemmlg-1.pdf  used on i
-nput line 497.
+nput line 512.
 (pdftex.def)             Requested size: 328.8281pt x 204.40665pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[27 <./paper_apa_files/figure-latex/simemmlg-1.pdf>] [28]
-<paper_apa_files/figure-latex/anchorfalse-1.pdf, id=333, 459.7175pt x 280.04625
+[28 <./paper_apa_files/figure-latex/simemmlg-1.pdf>]
+<paper_apa_files/figure-latex/anchorfalse-1.pdf, id=332, 459.7175pt x 280.04625
 pt>
 File: paper_apa_files/figure-latex/anchorfalse-1.pdf Graphic file (type pdf)
 <use paper_apa_files/figure-latex/anchorfalse-1.pdf>
 Package pdftex.def Info: paper_apa_files/figure-latex/anchorfalse-1.pdf  used o
-n input line 520.
+n input line 535.
 (pdftex.def)             Requested size: 459.73741pt x 280.05836pt.
-[29 <./paper_apa_files/figure-latex/anchorfalse-1.pdf>]
-<paper_apa_files/figure-latex/achievegap-1.pdf, id=349, 463.7325pt x 280.04625p
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \vbox (badness 2318) has occurred while \output is active []
+
+[29]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[30 <./paper_apa_files/figure-latex/anchorfalse-1.pdf>]
+<paper_apa_files/figure-latex/achievegap-1.pdf, id=356, 463.7325pt x 280.04625p
 t>
 File: paper_apa_files/figure-latex/achievegap-1.pdf Graphic file (type pdf)
 <use paper_apa_files/figure-latex/achievegap-1.pdf>
 Package pdftex.def Info: paper_apa_files/figure-latex/achievegap-1.pdf  used on
- input line 531.
+ input line 546.
 (pdftex.def)             Requested size: 463.73842pt x 280.04982pt.
-[30 <./paper_apa_files/figure-latex/achievegap-1.pdf>] [31] [32] [33
+[31 <./paper_apa_files/figure-latex/achievegap-1.pdf>] [32] [33] [34
 
-] [34] [35] [36] [37] [38] [39] [40] [41
+] [35] [36] [37] [38] [39] [40] [41] [42
 
 ]
 Underfull \vbox (badness 1067) has occurred while \output is active []
 
-[42] AED endfloat: Processing end Figures and Tables [43]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 790.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 790.
+[43] AED endfloat: Processing end Figures and Tables [44]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 803.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 803.
 (./paper_apa.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 790.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 790.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 803.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 803.
  ) 
 Here is how much of TeX's memory you used:
- 17562 strings out of 480608
- 263156 string characters out of 5903631
- 568515 words of memory out of 5000000
- 32713 multiletter control sequences out of 15000+600000
- 620403 words of font info for 239 fonts, out of 8000000 for 9000
+ 17569 strings out of 480608
+ 263238 string characters out of 5903631
+ 569714 words of memory out of 5000000
+ 32715 multiletter control sequences out of 15000+600000
+ 620533 words of font info for 241 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 49i,12n,51p,2427b,474s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 49i,12n,51p,2427b,485s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.17} has been referenced but does not ex
 ist, replaced by a fixed one
 
@@ -988,10 +1000,10 @@ e1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2020/texmf-dist/fonts
 symbol/usyr.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/times/utmb8
 a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
 r/local/texlive/2020/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper_apa.pdf (43 pages, 2448962 bytes).
+Output written on paper_apa.pdf (44 pages, 2450485 bytes).
 PDF statistics:
- 663 PDF objects out of 1000 (max. 8388607)
- 571 compressed objects within 6 object streams
- 207 named destinations out of 1000 (max. 500000)
+ 669 PDF objects out of 1000 (max. 8388607)
+ 576 compressed objects within 6 object streams
+ 209 named destinations out of 1000 (max. 500000)
  16643 words of extra memory for PDF output out of 17280 (max. 10000000)
 

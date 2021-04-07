@@ -29,15 +29,6 @@ item_map <-
 
 item_map %>% write_rds("02-itemmap.rds")
 
-
-
-
-
-
-
-
-
-
 anchor_items <- read_rds(here("03-anchor-items.rds"))
 item_map <- read_rds(here("02-itemmap.rds"))
 

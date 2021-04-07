@@ -1,5 +1,5 @@
 ---
-title             : "Treading Carefully: Agnostic Identification as the Tenuous First Step of Detecting Differential Item Functioning"
+title             : "Treading Carefully: Agnostic Identification as the First Step of Detecting Differential Item Functioning"
 shorttitle        : "Agnostic Identification"
 
 author: 
@@ -23,7 +23,7 @@ authornote: |
   The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305B140009 to the Board of Trustees of the Leland Stanford Junior University. The opinions expressed are those of the author and do not represent views of the Institute or the U.S. Department of Education.
 
 abstract: |
-  The last thirty years have brought significant methodological advances in detecting differential item functioning (DIF). Still, typical methods—such as matching on sum scores or identifying anchor items—are based exclusively on internal criteria and therefore rely on a crucial piece of circular logic: items with DIF are identified via an assumption that other items do not have DIF. This logic is an attempt to solve an easy-to-overlook identification problem at the beginning of most DIF detection. We explore this problem, which we describe as the Fundamental DIF Identification Problem, in depth here. We suggest three steps for determining whether it is surmountable and DIF detection results can be trusted. (1) Examine raw item response data for potential DIF. To this end, we introduce a new graphical method for visualizing potential DIF in raw item response data. (2) Compare the results of a variety of methods. These methods, which we describe in detail, include commonly-used anchor item methods, recently-proposed anchor point methods, and our suggested adaptations. (3) Interpret results in light of the possibility of DIF methods failing. We illustrate the basic challenge and the methodological options using the classic verbal aggression data for which we find that DIF methods should not be trusted. We conduct a simulation study to illustrate how DIF methods can fail.
+  Differential item functioning (DIF) is a popular technique within the item-response theory framework for detecting test items that are biased against particular demographic groups. The last thirty years have brought significant methodological advances in detecting DIF. Still, typical methods—such as matching on sum scores or identifying anchor items—are based exclusively on internal criteria and therefore rely on a crucial piece of circular logic: items with DIF are identified via an assumption that other items do not have DIF. This logic is an attempt to solve an easy-to-overlook identification problem at the beginning of most DIF detection. We explore this problem, which we describe as the Fundamental DIF Identification Problem, in depth here. We suggest three steps for determining whether it is surmountable and DIF detection results can be trusted. (1) Examine raw item response data for potential DIF. To this end, we introduce a new graphical method for visualizing potential DIF in raw item response data. (2) Compare the results of a variety of methods. These methods, which we describe in detail, include commonly-used anchor item methods, recently-proposed anchor point methods, and our suggested adaptations. (3) Interpret results in light of the possibility of DIF methods failing. We illustrate the basic challenge and the methodological options using the classic verbal aggression data and a simulation study. We recommend best practices for cautious DIF detection.
   
 keywords          : "Item Response Theory; DIF; Anchor Items; Anchor Points; Bias"
 
@@ -40,6 +40,7 @@ header-includes:
 - \DeclareMathOperator*{\argmin}{arg\,min} # for gini coefficient
 - \usepackage{float}
 - \usepackage{setspace}\doublespacing
+- \AtBeginEnvironment{tabular}{\singlespacing} % new
 
 floatsintext      : yes
 figurelist        : no

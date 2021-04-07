@@ -1,0 +1,130 @@
+---
+output:
+  bookdown::pdf_document2:
+    includes:
+    keep_tex: yes
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 5 
+
+fontsize: 11pt
+bibliography: paper.bib
+link-citations: yes
+
+title: |
+    Treading carefully: Agnostic identification as the tenuous first step of detecting differential item functioning
+subtitle: |
+    Benjamin A. Stenhaug, Michael C. Frank, and Benjamin W. Domingue  
+    Stanford University
+abstract: |
+  The last thirty years have brought significant methodological advance in detecting differential item functioning (DIF). Still, typical methods—such as matching on sum scores or identifying anchor items—are based exclusively on internal criterion and therefore use the circular logic of looking for DIF items while assuming other items do not contain DIF. This logic is an attempt to solve an easy-to-overlook identification problem at the beginning of most DIF detection. We explore this problem, which we describe as the Fundamental DIF Identification Problem, in depth here. We suggest three steps for determining whether it is surmountable and DIF detection results can be trusted. (1) Examine raw item response data for potential DIF. To this end, we introduce a new graphical method for visualizing potential DIF in raw item response data. (2) Compare the results of a variety of methods. These methods, which we describe in detail, include adaptations of commonly-used anchor item methods and adaptations of recently-proposed anchor point methods. (3) Interpret results in light of the possibility of DIF methods failing. We illustrate the basic challenge and the methodological options using the standard verbal aggression data set for which we find that DIF methods should not be trusted. We conduct a simulation study to illustrate how DIF methods can fail. \clearpage 
+  
+  <!-- 
+  https://tinyurl.com/ybremelq 
+  
+  To help applied researchers overcome The Fundamental DIF Identification Problem responsibly, we discuss when DIF methods are likely to work.
+  
+  1. process to overcome
+  
+  2. the cases in which 
+  
+  We argue that
+  
+  Highlight cases it has failed
+  
+  Suggest a process for overcoming it
+  
+  See the where does this go stuff maybe
+  
+  We argued that wise to be even wearier than theoretical DIF methods research suggests and applied DIF methods research demonstrates than the literature suggests. purification has a chance of working and it has a chance of making matters worse.
+  -->
+  
+header-includes: 
+- \interfootnotelinepenalty=10000
+- \usepackage{amsmath}
+- \DeclareMathOperator*{\argmax}{arg\,max} # for gini coefficient
+- \DeclareMathOperator*{\argmin}{arg\,min} # for gini coefficient
+- \usepackage{float}
+- \setlength{\parindent}{4em} # all of this for draft, papaja should take care of things
+- \setlength{\parskip}{2em}
+- \usepackage[autostyle, english = american]{csquotes}
+- \usepackage{setspace}\doublespacing
+- \AtBeginEnvironment{tabular}{\singlespacing} # this makes that table single spaced
+- \usepackage{natbib} # citations in that table were a hassle. this is still a bit broken. remember can always change tex file.
+---
+
+```{r setup, include = FALSE}
+# https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html 
+
+knitr::opts_chunk$set(
+    fig.align='center',
+    echo=FALSE,
+    warning=FALSE,
+    message=FALSE,
+    fig.pos='H'
+    # fig.retina = 5
+)
+
+library(tidyverse)
+library(ggtext)
+library(here)
+library(mirt)
+library(cluster)
+library(DescTools)
+library(knitr)
+library(kableExtra)
+set.seed(12345)
+R.utils::sourceDirectory(here("R"))
+theme_set(theme_bw())
+```
+
+<!-- the literature basically talks separately about anchor selection and DIF methods. much more literature is on DIF methods and less is on anchor selection. I'm basically writing a paper about anchor selection and just calling it DIF methods because that seems like where the action is. I'm taking fixed at that the likelihood ratio test is the way to go (and perhaps that deserves more detail)? -->
+
+\clearpage
+
+# Introduction {#intro}
+
+```{r child = "paper_1_intro.Rmd"}
+```
+
+# Descriptive analysis as the first step {#descriptive}
+
+```{r child = "paper_2_descriptive.Rmd"}
+```
+
+# Agnostic identification methods {#aimethods}
+
+```{r child = "paper_3_ai_methods.Rmd"}
+```
+
+# Simulation study
+
+```{r child = "paper_4_simulation_study.Rmd"}
+```
+
+# Discussion
+
+```{r child = "paper_5_discussion.Rmd"}
+```
+
+```{r}
+# {r child = "paper_6_notes.Rmd"}
+# {r child = "paper_7_scratch.Rmd"}
+```
+
+
+\clearpage
+
+<!-- weird formatting that isn't apa I don't think and indentation is weird, solution is to use papaja (look at paper_apa.Rmd) or this might also be helpful https://stackoverflow.com/questions/4073674/how-to-disable-indentation-in-particular-section-in-latex-->
+
+<!-- hopefully all of this below goes away with papaja and other solutions. but remember if it can't editing the latek file is always an option on the final draft! 
+https://github.com/haozhu233/kableExtra/issues/214
+https://stackoverflow.com/questions/51613152/citing-within-an-rmarkdown-table
+https://tex.stackexchange.com/questions/272475/citations-in-tabular-environment-not-working
+https://tex.stackexchange.com/questions/359872/is-it-possible-to-use-cite-inside-xtable
+https://github.com/yihui/rmarkdown-cookbook/issues/71
+-->
+
+\bibliographystyle{apa}
+\bibliography{paper.bib}

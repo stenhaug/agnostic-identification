@@ -42,4 +42,4 @@ out <-
     out %>%
     mutate(bigsim = map2(bigsim, n_dif_items, add_foc_mean))
 
-out %>% write_rds("simstudy/finalsim.rds")
+out %>% write_rds("simstudy/finalsim.rds")#
