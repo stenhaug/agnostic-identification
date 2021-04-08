@@ -32,7 +32,7 @@ At present "little evidence is available to guide applied researchers through th
 \centering
 \begin{tabular}{|p{6cm}|p{9cm}|}
 \toprule
- \textbf{Practice} & \textbf{Example} \\\midrule
+ \textbf{Practice} & \textbf{Implication} \\\midrule
  1. Descriptively examine raw item response data for potential DIF & By looking at a graph of raw item response data, the analyst realizes that the Fundamental DIF Identification Problem is challenging for their data.  \\\hline
  2. Use and compare results from multiple DIF detection methods & By implementing multiple DIF detection methods, the analyst recognizes that their conclusions will change depending on the method that they use. \\\hline
  3. Report results as being dependent on the assumptions of the DIF detection methods used & In presenting results, the analyst makes clear that their conclusions hinge on the assumptions of the DIF method used. \\ 
