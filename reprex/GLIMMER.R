@@ -1,8 +1,10 @@
+# LOAD PACKAGES -----------------------------------------------------------
 library(tidyverse)
 library(difR)
 library(mirt)
 data("verbal")
 
+# CLEAN VERBAL DATA -------------------------------------------------------
 verbal_clean <-
     verbal %>%
     as_tibble() %>%
@@ -16,6 +18,8 @@ data <-
     verbal_clean %>%
     select(-gender)
 
+
+# MIRT FUNCTION HELPERS ---------------------------------------------------
 fit_mod_intuitive <- function(data, groups){
     multipleGroup(data, 1, itemtype = "Rasch", groups, invariance = "free_var", SE = TRUE, verbose = FALSE)
 }
@@ -42,6 +46,7 @@ draws_df_to_logit_plot <- function(draws_df){
         labs(x = "", y = "")
 }
 
+# CREATE GLIMMER ----------------------------------------------------------
 mod_intuitive <- fit_mod_intuitive(data, groups)
 draws_df <- mod_intuitive %>% mod_intuitive_to_draws_df()
 
